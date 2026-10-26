@@ -1,0 +1,75 @@
+openapi: 3.1.0
+info:
+  title: RSS Feed Reader Subscription API
+  version: 1.0.0
+  description: Local API for adding and listing in-memory feed subscription values.
+servers:
+  - url: http://localhost:5151
+paths:
+  /api/subscriptions:
+    get:
+      summary: List subscriptions
+      description: Returns all subscriptions in insertion order. Returns an empty array when none have been added.
+      operationId: listSubscriptions
+      responses:
+        '200':
+          description: Ordered subscription values.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionList'
+    post:
+      summary: Add a subscription
+      description: Appends the non-empty value without URL syntax checking, deduplication, or a request to the submitted address. Returns the updated ordered list.
+      operationId: addSubscription
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+      responses:
+        '200':
+          description: Updated ordered subscription values.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionList'
+        '400':
+          description: The request is malformed or the URL value is empty or whitespace-only. The response uses the standard problem-details shape.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    SubscriptionRequest:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          minLength: 1
+          description: Non-empty user-supplied value. Whitespace-only values are rejected; no URL format validation is performed.
+    SubscriptionList:
+      type: array
+      items:
+        type: string
+      description: Ordered values; duplicate values are allowed.
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri-reference
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+          description: Brief validation detail with no sensitive information.
+        instance:
+          type: string
+          format: uri-reference
