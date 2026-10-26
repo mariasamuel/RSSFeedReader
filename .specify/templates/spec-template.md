@@ -90,6 +90,13 @@
 - **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
 - **FR-005**: System MUST [behavior, e.g., "log all security events"]
 
+### Security and Quality Requirements
+
+- Identify untrusted inputs, external content, and relevant safeguards; state
+  "Not applicable" with a brief rationale when the feature introduces no such boundary.
+- Define measurable acceptance criteria for security controls and observable
+  behavior introduced by the feature.
+
 *Example of marking unclear requirements:*
 
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]

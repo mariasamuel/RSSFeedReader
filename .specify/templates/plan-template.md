@@ -31,7 +31,15 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- Confirm the feature stays within its explicitly approved MVP or later-phase scope;
+  identify deferred capabilities.
+- Identify trust boundaries for user-provided URLs and any retrieved feed content.
+  If network fetching is added, specify destination restrictions, redirect policy,
+  response bounds, safe parsing, and HTML sanitization as applicable.
+- Preserve the API/UI responsibility boundary and justify new dependencies or layers.
+- Map observable requirements to automated tests; include contract, integration,
+  and security-control tests where the change crosses those boundaries.
+- Verify cross-platform assumptions and API/UI origin configuration when affected.
 
 ## Project Structure
 
